@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 // Definir os Tipos para as Props
 type Card = {
@@ -16,53 +16,27 @@ type CardProps = {
   mode?: "card1" | "card2" | "card3" | "card4";
   type?: "desktop" | "mobile";
   layout?: "small" | "large";
-  onChange?: (index: number) => void;
   showProgress?: boolean;
 };
 
-// Criando Componente Modular
+// Modelando Componente
 const ModularCard: React.FC<CardProps> = ({
   components,
   mode = "card1",
   type = "desktop",
   layout = "large",
-  onChange,
   showProgress = false,
 }) => {
-  // Gerenciando Estado Interno
-  const [indexCurrent, setIndexCurrent] = useState(0);
+  const currentCard = components[0];
 
-  // Função para me ajudar alternar conteudo
-  const toggleComponent = (newIndex: number) => {
-    setIndexCurrent(newIndex);
-    if (onChange) {
-      onChange(newIndex);
-    }
-  };
-  //rederizando os componentes
   const renderComponent = () => {
-    const currentCard = components[indexCurrent];
-
     switch (mode) {
       case "card1":
         return (
           <div className="bg-blue-500 text-white p-4 rounded-lg shadow-md">
             <div className="flex justify-between items-center mb-2">
               <h2 className="text-xl font-bold">{currentCard.title}</h2>
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                />
-              </svg>
+              {/* Ícone */}
             </div>
             <p className="text-lg mb-2">{currentCard.paragraph}</p>
             <p className="mb-2">{currentCard.videos} Vídeos</p>
@@ -127,6 +101,8 @@ const ModularCard: React.FC<CardProps> = ({
             <p className="text-sm mt-2">{currentCard.progress}% concluído</p>
           </div>
         );
+      default:
+        return null;
     }
   };
 
@@ -137,21 +113,6 @@ const ModularCard: React.FC<CardProps> = ({
       }`}
     >
       {renderComponent()}
-      <div className="flex space-x-2 mt-4">
-        {components.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => toggleComponent(index)}
-            className={`px-2 py-1 rounded ${
-              indexCurrent === index
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
-          >
-            {index + 1}
-          </button>
-        ))}
-      </div>
     </div>
   );
 };
