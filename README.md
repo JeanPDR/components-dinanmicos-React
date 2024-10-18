@@ -1,5 +1,5 @@
 
-# ModularCard Component
+# Comoponente Modular e Dinâmino com React
 
 Este projeto implementa um componente modular e dinâmico em React chamado **ModularCard**. O componente permite renderizar diferentes layouts de cartões (cards) com base em dados e configurações fornecidas através de props. Ele é altamente reutilizável e flexível, suportando múltiplos modos e layouts.
 
